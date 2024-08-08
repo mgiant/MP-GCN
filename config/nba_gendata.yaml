@@ -1,0 +1,10 @@
+# # Setting
+seed: 1
+debug: False
+work_dir: ./workdir
+
+dataset: nba
+dataset_args:
+  num_frame: 72
+  dataset_root_folder: ./data/raw/nba
+  out_folder: ./data/nba

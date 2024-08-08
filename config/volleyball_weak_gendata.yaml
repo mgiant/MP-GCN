@@ -1,0 +1,10 @@
+# Setting
+seed: 1
+debug: False
+work_dir: ./workdir
+
+dataset: volleyball-weak
+dataset_args:
+  num_frame: 41
+  dataset_root_folder: ./data/raw/volleyball-weak
+  out_folder: ./data/volleyball-weak
