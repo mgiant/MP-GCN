@@ -1,0 +1,53 @@
+# Setting
+gpus: [0]
+seed: 1
+debug: False
+pretrained_path:
+work_dir: ./workdir
+
+# Data Loader
+dataset: kinetics
+dataset_args:
+  graph: coco-4
+  labeling: distance
+  train_batch_size: 16
+  eval_batch_size: 16
+  inputs: B
+  part: person
+  transform: False
+  root_folder: ./data/k400_hrnet
+  person_id: [0,1,2,3]
+
+# Model
+model_type: MPGCN
+model_args:
+  use_att: True
+  kernel_size: [3,2]
+  dilation: [2,3]
+  reduct_ratio: 1
+
+# Optimizer
+# SGD, Adam
+optimizer: SGD
+optimizer_args:
+  SGD:
+    lr: 0.1
+    momentum: 0.9
+    nesterov: True
+    weight_decay: 0.0002
+  Adam:
+    lr: 0.1
+    betas: [0.9,0.99]
+    weight_decay: 0.0002
+
+# Scheduler
+# step, cosine
+lr_scheduler: cosine
+scheduler_args:
+  step:
+    max_epoch: 70
+    warm_up: 10
+    step_lr: [20,50]
+  cosine:
+    max_epoch: 65
+    warm_up: 5

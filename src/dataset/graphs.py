@@ -13,7 +13,7 @@ class Graph():
         self.dilation = dilation
         self.hop = hop
         
-        if labeling not in ['spatial', 'zeros', 'ones', 'eye', 'intra-inter']:
+        if labeling not in ['spatial', 'zeros', 'ones', 'eye', 'intra-inter', 'distance']:
             logging.info('')
             logging.error(
                 'Error: Do NOT exist this graph labeling: {}!'.format(self.labeling))
@@ -180,7 +180,19 @@ class Graph():
 
     def _get_adjacency(self):
 
-        if self.labeling == 'spatial':
+        if self.labeling == 'distance':
+            hop_dis = self._get_hop_distance()
+            valid_hop = range(0, self.max_hop + 1)
+            adjacency = np.zeros((self.num_node, self.num_node))
+            for hop in valid_hop:
+                adjacency[hop_dis == hop] = 1
+            normalize_adjacency = self._normalize_digraph(adjacency)
+
+            A = np.zeros((len(valid_hop), self.num_node, self.num_node))
+            for i, hop in enumerate(valid_hop):
+                A[i][hop_dis == hop] = normalize_adjacency[hop_dis == hop]
+
+        elif self.labeling == 'spatial':
             hop_dis = self._get_hop_distance()
             valid_hop = range(0, self.max_hop + 1)
             adjacency = np.zeros((self.num_node, self.num_node))

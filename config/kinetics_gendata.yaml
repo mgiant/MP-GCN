@@ -1,0 +1,9 @@
+# # Setting
+debug: False
+work_dir: ./workdir
+
+dataset: kinetics
+dataset_args:
+  num_frame: 300
+  dataset_root_folder: ./data/k400_hrnet
+  out_folder: ./data/k400_hrnet

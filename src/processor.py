@@ -159,7 +159,7 @@ class Processor(Initializer):
             best_score = {}
             if self.args.resume:
                 logging.info('Loading checkpoint ...')
-                checkpoint = utils.load_checkpoint(self.args.work_dir)
+                checkpoint = utils.load_checkpoint(self.args.work_dir, self.model_name)
                 self.model.module.load_state_dict(checkpoint['model'])
                 self.optimizer.load_state_dict(checkpoint['optimizer'])
                 self.scheduler.load_state_dict(checkpoint['scheduler'])

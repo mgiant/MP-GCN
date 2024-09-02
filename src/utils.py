@@ -30,10 +30,8 @@ def get_current_timestamp():
     return '[ {},{:0>3d} ] '.format(strftime('%Y-%m-%d %H:%M:%S', localtime(ct)), ms)
 
 
-def load_checkpoint(work_dir, model_name='resume'):
-    if model_name == 'resume':
-        file_name = '{}/checkpoint.pth.tar'.format(work_dir)
-    elif model_name == 'debug':
+def load_checkpoint(work_dir, model_name):
+    if model_name == 'debug':
         file_name = '{}/temp/debug.pth.tar'.format(work_dir)
     else:
         file_name = '{}/{}.pth.tar'.format(work_dir, model_name)
@@ -86,12 +84,14 @@ def save_checkpoint(model, optimizer, scheduler, epoch, best_state, is_best, wor
         json.dump(out, f)
 
 def set_logging(args):
-    config = args.config.split('/')[1:]
-    config[-1] = config[-1].replace('.yaml', '')
-    config = '/'.join(config)
     if args.debug or args.evaluate or args.extract or args.generate_data:
         save_dir = '{}/temp'.format(args.work_dir)
+    elif args.resume:
+        save_dir = args.work_dir
     else:
+        config = args.config.split('/')[1:]
+        config[-1] = config[-1].replace('.yaml', '')
+        config = '/'.join(config)
         ct = strftime('%Y-%m-%d %H-%M-%S')
         save_dir = '{}/{}/{}'.format(args.work_dir, config, ct)
     os.makedirs(save_dir, exist_ok=True)
